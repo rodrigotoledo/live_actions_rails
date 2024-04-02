@@ -1,0 +1,29 @@
+<%=turbo_frame_tag "task_#{task.id}" do %>
+<div id="<%= dom_id task %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= task.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= task.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Scheduled at:</strong>
+    <%= I18n.l(task.scheduled_at, format: :long) if task.scheduled_at.present?  %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Completed:</strong>
+    <%= task.completed %>
+  </p>
+
+  <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium", target: "_top" %>
+  <div class="inline-block ml-2">
+    <%= button_to "Destroy this task", task_path(task), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium", target: "_top" %>
+  </div>
+  <hr class="mt-6">
+</div>
+<% end %>
