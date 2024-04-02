@@ -165,7 +165,7 @@ Tornando os detalhes de uma Tarefa atualizados em tempo real também
     - Pelo console também se refletem atualizações
 
 ```bash
-bundle add redis
+bundle update redis
 bundle install
 ```
 
@@ -258,8 +258,8 @@ Ajustando a tela inicial
   <div id="tasks" class="min-w-full">
     <%= render @tasks %>
   </div>
+</div>
   ```
-  
 É hora de morphar! Buscas com eventos
 
 ```ruby
@@ -280,5 +280,5 @@ end
 ## Módulo 6: Conclusão
 
 - Melhorias e revisão do curso.
-- Sidekiq
+- Sidekiq <https://sidekiq.org/>
 - Por que de mudanças em views?
