@@ -259,7 +259,8 @@ Ajustando a tela inicial
     <%= render @tasks %>
   </div>
 </div>
-  ```
+```
+
 É hora de morphar! Buscas com eventos
 
 ```ruby
