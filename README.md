@@ -175,11 +175,45 @@ end
 
 1. Updates via the console
   - Updates via the console also reflect changes
+  - Using `redis` to have connections and perform background updates
 
 ```bash
 bundle update redis
 bundle install
 ```
+
+  - If you haven't installed Homebrew yet, you can do so by running the following command:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+  - Once Homebrew is installed, you can install Redis and start with the following commands:
+
+```bash
+brew install redis
+brew services start redis
+```
+
+  - If you are using docker, you also start with redis server
+  - Create a `docker-compose.yml` file with the following content:
+
+```yaml
+# docker-compose.yml
+version: '3'
+services:
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+```
+
+  - Run the following command in the directory where your `docker-compose.yml` file is located:
+
+```bash
+docker-compose up -d
+```
+
+  - Now you need change the configuration of cable.yml to run background processes
 
 ```yaml
 # live_actions/config/cable.yml
