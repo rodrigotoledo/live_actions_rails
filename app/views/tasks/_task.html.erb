@@ -1,4 +1,4 @@
-<%=turbo_frame_tag "task_#{task.id}" do %>
+<%=turbo_stream_from task %>
 <div id="<%= dom_id task %>">
   <p class="my-5">
     <strong class="block font-medium mb-1">Title:</strong>
@@ -17,13 +17,12 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Completed:</strong>
-    <%= task.completed %>
+    <%= t(task.completed) if task.completed? %>
   </p>
 
-  <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium", target: "_top" %>
+  <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 ml-2 px-5 bg-blue-400 inline-block font-medium", target: "_top" %>
   <div class="inline-block ml-2">
-    <%= button_to "Destroy this task", task_path(task), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium", target: "_top" %>
+    <%= button_to "Destroy this task", task_path(task), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-400 font-medium", form: { data: { turbo_confirm: 'Are you sure?' } } %>
   </div>
   <hr class="mt-6">
 </div>
-<% end %>

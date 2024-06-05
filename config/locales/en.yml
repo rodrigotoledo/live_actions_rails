@@ -29,3 +29,5 @@
 
 en:
   hello: "Hello world"
+  true: "yes"
+  false: "no"

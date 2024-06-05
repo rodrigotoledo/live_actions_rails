@@ -4,7 +4,7 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
       <br />
     <% end %>
-    <%= link_to "Back to tasks", tasks_path, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Back to tasks", tasks_path, class: "rounded-lg py-3 px-5 bg-gray-200 inline-block font-medium" %>
 
     <%=turbo_stream_from "tasks" %>
     <%= render @task %>

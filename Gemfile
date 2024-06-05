@@ -70,6 +70,7 @@ gem 'tailwindcss-rails', '~> 2.3'
 
 gem 'faker', '~> 3.3'
 
-gem "stimulus_reflex", "= 3.5.0.rc3"
 
 gem "redis-session-store", "~> 0.11.5"
+
+gem "stimulus_reflex", "~> 3.5"
