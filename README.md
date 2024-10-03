@@ -129,10 +129,10 @@ Tornando os detalhes de uma Tarefa atualizados em tempo real também
 `app/views/tasks/show.html.erb`
 
 ```erb
-<div class="mx-auto md:w-2/3 w-full flex">
+<div class="flex w-full mx-auto md:w-2/3">
   <div class="mx-auto">
     <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+      <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-lg bg-green-50" id="notice"><%= notice %></p>
       <br />
     <% end %>
     <%= link_to "Back to tasks", tasks_path, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
@@ -225,7 +225,7 @@ TaskJob.perform_later(Task.last)
   - Criando a classe reflex
 
 ```bash
-bundle add stimulus_reflex --version 3.5.0.rc3
+bundle add stimulus_reflex
 bundle install
 rails stimulus_reflex:install
 rails g stimulus_reflex task
@@ -239,11 +239,11 @@ Ajustando a tela inicial
 
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-lg bg-green-50" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Tasks</h1>
+  <div class="flex items-center justify-between">
+    <h1 class="text-4xl font-bold">Tasks</h1>
     <%= link_to "New task", new_task_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
   <hr />
