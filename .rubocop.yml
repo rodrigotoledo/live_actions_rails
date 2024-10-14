@@ -7,7 +7,7 @@ Layout/LineLength:
 Metrics/AbcSize:
   Max: 400
 
-Metrics/MethodLength: 
+Metrics/MethodLength:
   Max: 100
 
 Metrics/ClassLength:
@@ -70,7 +70,7 @@ Lint/ShadowingOuterLocalVariable:
   Enabled: false
 
 Style/Documentation:
-  Enabled: false 
+  Enabled: false
 
 Metrics/BlockLength:
   Max: 200
@@ -81,7 +81,7 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
 
 Naming/BinaryOperatorParameterName:
-  Enabled: false 
+  Enabled: false
 
 Lint/Debugger:
   Enabled: false
