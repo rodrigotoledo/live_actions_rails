@@ -1,25 +1,28 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-lg bg-green-50" id="notice"><%= notice %></p>
-  <% end %>
+<div class="w-full text-gray-100">
+  <%= flash_message(notice) %>
 
-  <div class="flex items-center justify-between">
-    <h1 class="text-4xl font-bold">Tasks</h1>
-    <%= link_to "New task", new_task_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="font-bold text-4xl text-indigo-300">Tasks</h1>
+    <%= link_to "New task", new_task_path, class: "rounded-lg py-3 px-5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors" %>
   </div>
-  <hr />
-    <%= form_with url: nil, data: { reflex: "submit->TaskReflex#search" } do |form| %>
-    <div>
-      <%= form.text_field :search, data: { reflex: "keyup->TaskReflex#search", reflex_dataset: "combined" }, class: 'shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2', placeholder: 'Type and search...' %>
-      <%= form.submit 'Search', class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
+
+  <hr class="border-gray-700 my-4" />
+
+  <%= form_with url: nil, data: { reflex: "submit->TaskReflex#search" }, class: "mb-8" do |form| %>
+    <div class="flex gap-2">
+      <%= form.text_field :search,
+          data: { reflex: "keyup->TaskReflex#search", reflex_dataset: "combined" },
+          class: 'shadow rounded-md border border-gray-600 bg-gray-700 text-white outline-none px-3 py-2 w-full',
+          placeholder: 'Type and search...' %>
+      <%= form.submit 'Search',
+          class: 'rounded-lg py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-medium cursor-pointer transition-colors' %>
     </div>
   <% end %>
 
-  <!-- here is the channel... 
-   so everyone will receive information
-   that will becomes from this channel -->
-  <%=turbo_stream_from "tasks" %>
-  <div id="tasks" class="min-w-full">
-    <%= render @tasks %>
+  <%= turbo_stream_from "tasks" %>
+  <div id="tasks" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @tasks.each do |task| %>
+      <%= render task %>
+    <% end %>
   </div>
 </div>

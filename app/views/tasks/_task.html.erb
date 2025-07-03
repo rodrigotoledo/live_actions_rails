@@ -1,27 +1,50 @@
-<div id="<%= dom_id task %>">
-  <p class="my-5">
-    <strong class="block mb-1 font-medium">Title:</strong>
-    <%= task.title %>
-  </p>
+<%=turbo_frame_tag dom_id(task) do %>
+  <div class="bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-indigo-500 transition-all duration-300 mb-6">
+    <div class="space-y-4">
+      <!-- Title -->
+      <div>
+        <strong class="block font-medium text-indigo-300 mb-1">Title:</strong>
+        <p class="text-gray-200"><%= task.title %></p>
+      </div>
 
-  <p class="my-5">
-    <strong class="block mb-1 font-medium">Description:</strong>
-    <%= task.description %>
-  </p>
+      <!-- Description -->
+      <% if task.description.present? %>
+        <div>
+          <strong class="block font-medium text-indigo-300 mb-1">Description:</strong>
+          <p class="text-gray-300 whitespace-pre-line"><%= task.description %></p>
+        </div>
+      <% end %>
 
-  <p class="my-5">
-    <strong class="block mb-1 font-medium">Scheduled at:</strong>
-    <%= I18n.l(task.scheduled_at, format: :long) if task.scheduled_at.present?  %>
-  </p>
+      <!-- Scheduled At -->
+      <% if task.scheduled_at.present? %>
+        <div>
+          <strong class="block font-medium text-indigo-300 mb-1">Scheduled at:</strong>
+          <p class="text-gray-300">
+            <%= I18n.l(task.scheduled_at, format: :long) %>
+            <% if task.scheduled_at.past? && !task.completed? %>
+              <span class="ml-2 text-xs bg-red-900/30 text-red-300 px-2 py-1 rounded-full">Overdue</span>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
 
-  <p class="my-5">
-    <strong class="block mb-1 font-medium">Completed:</strong>
-    <%= t(task.completed) if task.completed? %>
-  </p>
+      <!-- Status -->
+      <div>
+        <strong class="block font-medium text-indigo-300 mb-1">Status:</strong>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= task.completed? ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400' %>">
+          <%= task.completed? ? 'Completed' : 'Pending' %>
+        </span>
+      </div>
+    </div>
 
-  <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 ml-2 px-5 bg-blue-400 inline-block font-medium", target: "_top" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this task", task_path(task), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-400 font-medium", form: { data: { turbo_confirm: 'Are you sure?' } } %>
+    <div class="mt-6 pt-4 -300 flex justify-between">
+      <%= link_to "Edit", edit_task_path(task),
+        target: "_top",
+        class: "rounded-lg py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors" %>
+
+      <%= button_to "Delete", task_path(task), method: :delete,
+        class: "rounded-lg py-2 px-4 bg-amber-600/80 hover:bg-amber-500/80 text-white font-medium transition-colors",
+        form: {"data-turbo-frame" => "_top", data: { turbo_confirm: "Are you sure?" } }%>
+    </div>
   </div>
-  <hr class="mt-6">
-</div>
+<% end %>

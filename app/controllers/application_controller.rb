@@ -1,4 +1,5 @@
-class ApplicationController < ActionController::Base
+# frozen_string_literal: true
 
-    include CableReady::Broadcaster
+class ApplicationController < ActionController::Base
+  include CableReady::Broadcaster
 end
