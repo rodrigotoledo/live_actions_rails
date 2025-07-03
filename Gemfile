@@ -42,12 +42,7 @@ group :development, :test do
   # Testing
   gem "factory_bot_rails"
   gem "faker"
-  gem "guard-rspec", require: false
-  gem "rails-controller-testing"
-  gem "rspec-json_expectations"
   gem "rspec-rails"
-  gem "shoulda-matchers"
-  gem "simplecov", require: false
 
   # Debugging
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
@@ -68,6 +63,12 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "guard-rspec", require: false
+  gem "simplecov", require: false
+  gem "rails-controller-testing"
+  gem "database_cleaner-active_record"
+  gem "rspec-json_expectations"
+  gem "shoulda-matchers"
 end
 
 gem "redis-session-store", "~> 0.11.5"
