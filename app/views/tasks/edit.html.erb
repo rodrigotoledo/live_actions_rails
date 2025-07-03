@@ -10,11 +10,8 @@
       <%= link_to "Show this task", @task,
           class: "rounded-lg py-3 px-5 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium transition-colors" %>
 
-      <%= link_to "Back to tasks", tasks_path,
-          class: "rounded-lg py-3 px-5 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium transition-colors" %>
-
       <%= button_to "Delete task", @task, method: :delete,
-          class: "rounded-lg py-3 px-5 bg-red-600/80 hover:bg-red-500/80 text-white font-medium transition-colors",
+          class: "rounded-lg py-3 px-5 bg-amber-600/80 hover:bg-amber-500/80 text-white font-medium transition-colors",
           form: {"data-turbo-frame" => "_top", data: { turbo_confirm: "Are you sure?" } }  %>
     </div>
   </div>
