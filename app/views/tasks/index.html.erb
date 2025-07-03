@@ -8,21 +8,22 @@
 
   <hr class="border-gray-700 my-4" />
 
-  <%= form_with url: nil, data: { reflex: "submit->TaskReflex#search" }, class: "mb-8" do |form| %>
-    <div class="flex gap-2">
-      <%= form.text_field :search,
-          data: { reflex: "keyup->TaskReflex#search", reflex_dataset: "combined" },
-          class: 'shadow rounded-md border border-gray-600 bg-gray-700 text-white outline-none px-3 py-2 w-full',
-          placeholder: 'Type and search...' %>
-      <%= form.submit 'Search',
-          class: 'rounded-lg py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-medium cursor-pointer transition-colors' %>
-    </div>
-  <% end %>
+  <div class="mb-8">
+    <%= form_with url: search_tasks_path, method: :post, data: { controller: "tasks" } do |form| %>
+      <div class="flex gap-2">
+        <%= form.text_field :search,
+              class: 'shadow rounded-md border border-gray-600 bg-gray-700 text-white outline-none px-3 py-2 w-full',
+              placeholder: 'Type and search...',
+              data: { action: "keyup->tasks#perform" } %>
 
-  <%= turbo_stream_from "tasks" %>
-  <div id="tasks" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @tasks.each do |task| %>
-      <%= render task %>
+        <%= form.button 'Search',
+              class: 'rounded-lg py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-medium cursor-pointer' %>
+      </div>
     <% end %>
   </div>
+
+  <%= turbo_stream_from "tasks" %>
+  <%= turbo_frame_tag "tasks", class: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" do %>
+    <%=render partial: 'tasks/list', locals: {tasks: @tasks} %>
+  <% end %>
 </div>

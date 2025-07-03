@@ -3,6 +3,16 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
+  def search
+    @tasks = Task.order(created_at: :desc)
+    if params[:search].present?
+      @tasks = @tasks.where("title ILIKE :search OR description ILIKE :search", search: "%#{params[:search]}%")
+    end
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.order(created_at: :desc)
