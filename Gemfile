@@ -72,8 +72,6 @@ end
 
 gem "redis-session-store", "~> 0.11.5"
 
-gem "stimulus_reflex", "~> 3.5"
-
 gem "activerecord-import"
 gem "activeresource"
 gem "oj"
