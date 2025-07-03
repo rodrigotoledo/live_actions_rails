@@ -12,7 +12,14 @@
 
   <body class="bg-gray-900 text-gray-100 min-h-screen">
     <div class="container mx-auto mt-4">
-      <%= link_to 'Back to home', root_path, class: "text-indigo-400 hover:text-indigo-300" %>
+      <% if !current_page?(root_path) && !current_page?(tasks_path) %>
+      <%= link_to tasks_path, class: "group flex items-center text-gray-400 hover:text-gray-300 transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Tasks
+      <% end %>
+      <% end %>
     </div>
     <main class="container mx-auto my-4 px-5 flex bg-gray-800 rounded-lg p-6 shadow-lg">
       <%= yield %>
