@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pin npm packages by running ./bin/importmap
 
 pin "application"
@@ -12,3 +14,5 @@ pin "morphdom", to: "https://ga.jspm.io/npm:morphdom@2.6.1/dist/morphdom.js", pr
 pin "cable_ready", to: "cable_ready.js", preload: true
 pin "stimulus_reflex", to: "stimulus_reflex.js", preload: true
 pin "fireworks-js", to: "https://ga.jspm.io/npm:fireworks-js@2.10.0/dist/index.es.js"
+pin "trix"
+pin "@rails/actiontext", to: "actiontext.esm.js"
