@@ -14,7 +14,7 @@ gem "sqlite3"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 gem "stimulus-rails"
-gem "tailwindcss-rails", "~> 4.1"
+gem "tailwindcss-rails", "~> 4.3"
 gem "turbo-rails"
 
 gem "bcrypt", "~> 3.1.7"
