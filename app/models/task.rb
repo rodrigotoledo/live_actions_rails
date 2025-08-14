@@ -3,11 +3,11 @@
 class Task < ApplicationRecord
   validates :title, presence: true
 
-  after_create_commit do
+  after_create do
     broadcast_prepend_to "tasks", partial: "tasks/task", locals: { task: self }
   end
 
-  after_update_commit do
+  after_save do
     broadcast_replace_to "tasks", target: "task_#{id}", partial: "tasks/task", locals: { task: self }
   end
 
