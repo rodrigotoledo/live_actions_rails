@@ -7,7 +7,7 @@ class Task < ApplicationRecord
     broadcast_prepend_to "tasks", partial: "tasks/task", locals: { task: self }
   end
 
-  after_save do
+  after_update do
     broadcast_replace_to "tasks", target: "task_#{id}", partial: "tasks/task", locals: { task: self }
   end
 

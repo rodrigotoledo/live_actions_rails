@@ -27,6 +27,9 @@ gem "solid_queue"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# CORS configuration for API requests
+gem "rack-cors"
+
 gem "kamal", require: false
 
 # Windows compatibility
