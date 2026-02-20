@@ -118,7 +118,7 @@ For Migrations (Remembering That You May Need To Run Both In Development And Tes
 docker compose -f docker-compose.development.yml run app rails db:migrate
 ```
 
-## Putting Down
+## Putting Server Down
 
 If You Want To Stop The Services:
 
