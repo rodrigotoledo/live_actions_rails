@@ -15,5 +15,5 @@
   "files.associations": {
     "*.erb": "erb"
   },
-  "ruby.linter.executablePath": "~/.asdf/installs/ruby/3.3.4/bin/"
+  "ruby.linter.executablePath": "~/.asdf/installs/ruby/4.0.6/bin/"
 }

@@ -1,8 +1,39 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+export HOME="${HOME:-/rails}"
+
+rm -f tmp/pids/server.pid
+mkdir -p tmp
+
+ensure_bundle() {
+  if bundle check >/dev/null 2>&1; then
+    return
+  fi
+
+  echo ">> Installing gems..."
+  (
+    flock -w 300 200 || exit 1
+    if bundle check >/dev/null 2>&1; then
+      exit 0
+    fi
+    bundle install
+  ) 200>"tmp/bundle-install.lock"
+}
+
+ensure_bundle
+
+if [ "${1}" = "bin/dev" ] || [ "${1}" = "./bin/dev" ] || \
+   { [ "${1}" = "./bin/rails" ] && [ "${2}" = "server" ]; }; then
   ./bin/rails db:prepare
 fi
 
-exec "${@}"
+if [ "${1}" = "sleep" ]; then
+  ./bin/rails db:test:prepare
+fi
+
+if [ "${1}" = "bin/guard" ] || \
+   { [ "${1}" = "bundle" ] && [ "${2}" = "exec" ] && [ "${3}" = "guard" ]; }; then
+  ./bin/rails db:test:prepare
+fi
+
+exec "$@"

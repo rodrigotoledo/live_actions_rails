@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/vendor/bundle
 
 # Ignore all environment files (except templates).
 /.env
@@ -37,3 +38,5 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 .vscode
+.local
+.cache

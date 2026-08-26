@@ -1,0 +1,73 @@
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+  stdin_open: true
+  tty: true
+  user: "${UID:-1000}:${GID:-1000}"
+  volumes:
+    - .:/rails:cached
+  working_dir: /rails
+  env_file:
+    - .env
+  environment:
+    BUNDLE_PATH: /rails/vendor/bundle
+    DB_HOST: db
+    DB_PORT: 5432
+    HOME: /rails
+    LISTEN_GEM_USE_POLLING: "true"
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    <<: *app
+    environment:
+      BUNDLE_PATH: /rails/vendor/bundle
+      DB_HOST: db
+      DB_PORT: 5432
+      HOME: /rails
+      LISTEN_GEM_USE_POLLING: "true"
+      RAILS_ENV: development
+      PORT: ${PORT:-3000}
+      APPLICATION_NAME: ${APPLICATION_NAME:-live_actions_rails}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      JWT_KEY: ${JWT_KEY:-}
+      BUNDLE_GEMFILE: /rails/Gemfile
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+
+  guard:
+    <<: *app
+    environment:
+      BUNDLE_PATH: /rails/vendor/bundle
+      DB_HOST: db
+      DB_PORT: 5432
+      HOME: /rails
+      LISTEN_GEM_USE_POLLING: "true"
+      RAILS_ENV: test
+      APPLICATION_NAME: ${APPLICATION_NAME:-live_actions_rails}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      BUNDLE_GEMFILE: /rails/Gemfile
+    command: ["sleep", "infinity"]
+
+volumes:
+  postgres_data:

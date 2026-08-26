@@ -1,16 +1,24 @@
 #!/usr/bin/env sh
 
-if ! gem list foreman -i --silent; then
-  echo "Installing foreman..."
-  gem install foreman
+if [ -f "Procfile.dev" ]; then
+  if ! gem list foreman -i --silent; then
+    echo "Installing foreman..."
+    gem install foreman
+  fi
+
+  export PORT="${PORT:-3000}"
+
+  # Let the debug gem allow remote connections,
+  # but avoid loading until `debugger` is called
+  export RUBY_DEBUG_OPEN="true"
+  export RUBY_DEBUG_LAZY="true"
+
+  if [ -f /.dockerenv ]; then
+    # Docker Compose sets DB_HOST=db; skip .env so foreman does not override it.
+    exec foreman start -f Procfile.dev -e /dev/null "$@"
+  else
+    exec foreman start -f Procfile.dev "$@"
+  fi
+else
+  exec "./bin/rails" server "$@"
 fi
-
-# Default to port 3000 if not specified
-export PORT="${PORT:-3000}"
-
-# Let the debug gem allow remote connections,
-# but avoid loading until `debugger` is called
-export RUBY_DEBUG_OPEN="true"
-export RUBY_DEBUG_LAZY="true"
-
-exec foreman start -f Procfile.dev "$@"

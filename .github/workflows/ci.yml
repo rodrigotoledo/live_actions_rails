@@ -46,14 +46,14 @@ jobs:
     env:
       RAILS_ENV: test
       DB_HOST: localhost
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/live_actions_rails_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       APPLICATION_NAME: live_actions_rails
 
     services:
       postgres:
-        image: postgres
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres

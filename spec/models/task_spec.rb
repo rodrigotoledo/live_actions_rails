@@ -18,15 +18,15 @@ RSpec.describe Task, type: :model do
   end
 
   describe "callbacks" do
-    describe "after_create_commit" do
+    describe "after_create" do
       it "broadcasts prepend to tasks stream" do
         expect {
           task.save
-        }.to have_broadcasted_to("tasks")
+        }.to have_broadcasted_to("tasks").twice
       end
     end
 
-    describe "after_update_commit" do
+    describe "after_save" do
       let!(:saved_task) { create(:task) }
 
       it "broadcasts replace to tasks stream" do

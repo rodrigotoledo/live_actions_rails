@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.3.4"
+ruby "4.0.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "pg"
@@ -50,6 +50,8 @@ group :development, :test do
   # Security
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
+  gem "guard-rspec", require: false
+  gem "simplecov", require: false
 end
 
 group :development do
@@ -62,20 +64,14 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
-  gem "guard-rspec", require: false
-  gem "simplecov", require: false
+
   gem "rails-controller-testing"
   gem "database_cleaner-active_record"
   gem "rspec-json_expectations"
   gem "shoulda-matchers"
 end
 
-gem "redis-session-store", "~> 0.11.5"
-
-gem "activerecord-import"
 gem "activeresource"
 gem "oj"
-gem "puma_worker_killer"
-gem "rack-timeout"
 gem "sidekiq"
+gem "tsort"

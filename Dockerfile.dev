@@ -1,0 +1,34 @@
+# syntax = docker/dockerfile:1
+
+ARG RUBY_VERSION=4.0.6
+FROM registry.docker.com/library/ruby:${RUBY_VERSION}-slim
+
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+      build-essential \
+      curl \
+      git \
+      inotify-tools \
+      libpq-dev \
+      libvips \
+      libyaml-dev \
+      pkg-config \
+      postgresql-client \
+      sqlite3 \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Tailwind's file watcher probes for watchman; a stub avoids "watchman: not found" noise.
+RUN printf '#!/bin/sh\nexit 1\n' > /usr/local/bin/watchman && chmod +x /usr/local/bin/watchman
+
+WORKDIR /rails
+
+ENV BUNDLE_PATH=/rails/vendor/bundle
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+EXPOSE 3000
+CMD ["bin/dev"]
